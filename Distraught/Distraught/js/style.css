@@ -1,0 +1,451 @@
+/* ===== UNIQLO THEME - DISTRAUGHT STYLE.CSS ===== */
+
+/* RESET & BASE */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --uniqlo-red: #e60012;
+    --uniqlo-black: #000000;
+    --uniqlo-white: #ffffff;
+    --uniqlo-gray-light: #f5f5f5;
+    --uniqlo-gray: #e0e0e0;
+    --uniqlo-gray-dark: #8c8c8c;
+    --uniqlo-border: #d9d9d9;
+}
+
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #ffffff;
+    color: #333333;
+    line-height: 1.6;
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* HEADER */
+header {
+    background: var(--uniqlo-white);
+    border-bottom: 1px solid var(--uniqlo-border);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding: 0;
+}
+
+.header-content {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 20px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    color: var(--uniqlo-red);
+    text-decoration: none;
+}
+
+.logo span {
+    color: var(--uniqlo-black);
+}
+
+/* NAVIGATION */
+nav {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+nav a {
+    color: var(--uniqlo-black);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 8px 0;
+    position: relative;
+    transition: color 0.2s ease;
+}
+
+nav a:hover {
+    color: var(--uniqlo-red);
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--uniqlo-red);
+    transition: width 0.3s ease;
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+.cart-icon {
+    position: relative;
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+.cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: var(--uniqlo-red);
+    color: white;
+    font-size: 11px;
+    font-weight: 500;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* BUTTONS */
+.btn {
+    display: inline-block;
+    padding: 12px 32px;
+    background: var(--uniqlo-red);
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+    text-align: center;
+    min-width: 140px;
+    font-family: 'Arial', sans-serif;
+}
+
+.btn:hover {
+    background: #c4000f;
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--uniqlo-black);
+    border: 1px solid var(--uniqlo-border);
+}
+
+.btn-secondary:hover {
+    background: var(--uniqlo-gray-light);
+    border-color: var(--uniqlo-gray-dark);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--uniqlo-red);
+    border: 1px solid var(--uniqlo-red);
+}
+
+.btn-outline:hover {
+    background: var(--uniqlo-red);
+    color: white;
+}
+
+/* MAIN CONTENT */
+main {
+    flex: 1;
+    width: 100%;
+}
+
+/* FOOTER */
+footer {
+    background: var(--uniqlo-black);
+    color: var(--uniqlo-white);
+    padding: 50px 20px 30px;
+    margin-top: auto;
+}
+
+.footer-content {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+}
+
+.footer-section h4 {
+    color: var(--uniqlo-white);
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 20px;
+}
+
+.footer-section a {
+    color: #999;
+    text-decoration: none;
+    font-size: 13px;
+    display: block;
+    margin-bottom: 10px;
+    transition: color 0.3s ease;
+}
+
+.footer-section a:hover {
+    color: var(--uniqlo-white);
+}
+
+.footer-bottom {
+    max-width: 1280px;
+    margin: 40px auto 0;
+    padding-top: 30px;
+    border-top: 1px solid #333;
+    text-align: center;
+    color: #999;
+    font-size: 12px;
+}
+
+/* FORMS */
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--uniqlo-black);
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--uniqlo-border);
+    background: white;
+    font-size: 14px;
+    color: var(--uniqlo-black);
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--uniqlo-black);
+}
+
+/* TABLES */
+.table-container {
+    overflow-x: auto;
+    margin-bottom: 30px;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.data-table thead {
+    background: var(--uniqlo-gray-light);
+}
+
+.data-table th {
+    padding: 16px 20px;
+    text-align: left;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--uniqlo-black);
+    border-bottom: 2px solid var(--uniqlo-border);
+}
+
+.data-table td {
+    padding: 20px;
+    border-bottom: 1px solid var(--uniqlo-border);
+    vertical-align: middle;
+}
+
+.data-table tbody tr:hover {
+    background: var(--uniqlo-gray-light);
+}
+
+/* CARDS */
+.card {
+    background: white;
+    border: 1px solid var(--uniqlo-border);
+    padding: 24px;
+    margin-bottom: 20px;
+}
+
+.card-header {
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--uniqlo-border);
+}
+
+.card-header h3 {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--uniqlo-black);
+}
+
+/* UTILITY CLASSES */
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-left { text-align: left; }
+
+.mt-1 { margin-top: 8px; }
+.mt-2 { margin-top: 16px; }
+.mt-3 { margin-top: 24px; }
+.mt-4 { margin-top: 32px; }
+
+.mb-1 { margin-bottom: 8px; }
+.mb-2 { margin-bottom: 16px; }
+.mb-3 { margin-bottom: 24px; }
+.mb-4 { margin-bottom: 32px; }
+
+.p-1 { padding: 8px; }
+.p-2 { padding: 16px; }
+.p-3 { padding: 24px; }
+.p-4 { padding: 32px; }
+
+/* ===== ADMIN SIDEBAR (SINGLE VERSION) ===== */
+
+.admin-container {
+    display: flex;
+    gap: 30px;
+    min-height: 70vh;
+    max-width: 1280px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.admin-sidebar {
+    width: 240px;
+    flex-shrink: 0;
+}
+
+.sidebar-nav {
+    border: 1px solid var(--uniqlo-border);
+    background: white;
+}
+
+.sidebar-nav a {
+    display: block;
+    padding: 16px 20px;
+    color: var(--uniqlo-black);
+    text-decoration: none;
+    border-bottom: 1px solid var(--uniqlo-border);
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease;
+}
+
+.sidebar-nav a:hover {
+    background: var(--uniqlo-gray-light);
+}
+
+.sidebar-nav a.active {
+    background: var(--uniqlo-red);
+    color: white;
+    font-weight: 600;
+}
+
+.sidebar-nav a:last-child {
+    border-bottom: none;
+}
+
+.admin-content {
+    flex: 1;
+    padding-top: 0;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .header-content {
+        height: 60px;
+        padding: 0 16px;
+    }
+    
+    nav {
+        gap: 16px;
+    }
+    
+    .admin-container {
+        flex-direction: column;
+        gap: 20px;
+        margin: 20px auto;
+    }
+    
+    .admin-sidebar {
+        width: 100%;
+    }
+    
+    .sidebar-nav {
+        display: flex;
+        overflow-x: auto;
+    }
+    
+    .sidebar-nav a {
+        flex: 0 0 auto;
+        white-space: nowrap;
+        border-right: 1px solid var(--uniqlo-border);
+        border-bottom: none;
+    }
+    
+    .sidebar-nav a:last-child {
+        border-right: none;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .btn {
+        min-width: 120px;
+        padding: 10px 20px;
+    }
+}
+
+/* FONT VARIATIONS FOR REQUIREMENT */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 500;
+}
+
+.product-name {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-weight: 500;
+}
+
+.product-price {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 600;
+}
+
+code, .code-block {
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 0.9em;
+}

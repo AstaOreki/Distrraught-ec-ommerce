@@ -1,0 +1,435 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #ffffff;
+    color: #333333;
+    line-height: 1.6;
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    color: var(--uniqlo-red);
+    text-decoration: none;
+    font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+}
+
+nav a {
+    color: var(--uniqlo-black);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 8px 0;
+    position: relative;
+    transition: color 0.2s ease;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 32px;
+    background: var(--uniqlo-red);
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+    text-align: center;
+    min-width: 140px;
+    /* ADDED: Button-specific font */
+    font-family: 'Arial Black', 'Arial Bold', Gadget, sans-serif;
+    font-weight: 700;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+    font-weight: 500;
+    color: var(--uniqlo-black);
+}
+
+.content h1 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    letter-spacing: -0.02em;
+}
+
+.product-name {
+    font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+    font-weight: 600;
+}
+
+.product-price {
+    font-family: 'Courier New', Courier, 'Lucida Console', monospace;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--uniqlo-black);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--uniqlo-border);
+    background: white;
+    font-size: 14px;
+    color: var(--uniqlo-black);
+    transition: border-color 0.3s ease;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    font-family: 'Consolas', 'Monaco', 'Andale Mono', monospace;
+}
+
+.data-table th {
+    padding: 16px 20px;
+    text-align: left;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--uniqlo-black);
+    border-bottom: 2px solid var(--uniqlo-border);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+footer {
+    background: var(--uniqlo-black);
+    color: var(--uniqlo-white);
+    padding: 50px 20px 30px;
+    margin-top: auto;
+    font-family: 'Verdana', Geneva, sans-serif;
+    font-weight: 300;
+}
+
+.footer-section h4 {
+    color: var(--uniqlo-white);
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 20px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', sans-serif;
+}
+
+.admin-container, 
+.admin-sidebar,
+.admin-content {
+    font-family: 'Calibri', 'Candara', 'Segoe', sans-serif;
+}
+
+.alert, .notification, .special-text {
+    font-family: 'Impact', 'Haettenschweiler', 'Franklin Gothic Bold', sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+}
+
+blockquote, .testimonial {
+    font-family: 'Garamond', 'Baskerville', 'Baskerville Old Face', serif;
+    font-style: italic;
+    font-size: 1.1em;
+}
+
+code, pre, .code-block {
+    font-family: 'Lucida Console', 'Monaco', 'Andale Mono', monospace;
+    font-size: 0.9em;
+}
+
+.sidebar-nav a {
+    display: block;
+    padding: 16px 20px;
+    color: var(--uniqlo-black);
+    text-decoration: none;
+    border-bottom: 1px solid var(--uniqlo-border);
+    font-size: 14px;
+    transition: all 0.3s ease;
+    font-family: 'Optima', 'Segoe', 'Candara', sans-serif;
+}
+
+.cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: var(--uniqlo-red);
+    color: white;
+    font-size: 11px;
+    font-weight: 500;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 700;
+}
+
+:root {
+    --uniqlo-red: #e60012;
+    --uniqlo-black: #000000;
+    --uniqlo-white: #ffffff;
+    --uniqlo-gray-light: #f5f5f5;
+    --uniqlo-gray: #e0e0e0;
+    --uniqlo-gray-dark: #8c8c8c;
+    --uniqlo-border: #d9d9d9;
+}
+
+header {
+    background: var(--uniqlo-white);
+    border-bottom: 1px solid var(--uniqlo-border);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding: 0;
+}
+
+.header-content {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 20px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo span {
+    color: var(--uniqlo-black);
+}
+
+nav {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+nav a:hover {
+    color: var(--uniqlo-red);
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--uniqlo-red);
+    transition: width 0.3s ease;
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+.cart-icon {
+    position: relative;
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+.btn:hover {
+    background: #c4000f;
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--uniqlo-black);
+    border: 1px solid var(--uniqlo-border);
+}
+
+.btn-secondary:hover {
+    background: var(--uniqlo-gray-light);
+    border-color: var(--uniqlo-gray-dark);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--uniqlo-red);
+    border: 1px solid var(--uniqlo-red);
+}
+
+.btn-outline:hover {
+    background: var(--uniqlo-red);
+    color: white;
+}
+
+main {
+    flex: 1;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    width: 100%;
+}
+
+.footer-content {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+}
+
+.footer-section a {
+    color: #999;
+    text-decoration: none;
+    font-size: 13px;
+    display: block;
+    margin-bottom: 10px;
+    transition: color 0.3s ease;
+}
+
+.footer-section a:hover {
+    color: var(--uniqlo-white);
+}
+
+.footer-bottom {
+    max-width: 1280px;
+    margin: 40px auto 0;
+    padding-top: 30px;
+    border-top: 1px solid #333;
+    text-align: center;
+    color: #999;
+    font-size: 12px;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--uniqlo-black);
+}
+
+.table-container {
+    overflow-x: auto;
+    margin-bottom: 30px;
+}
+
+.data-table thead {
+    background: var(--uniqlo-gray-light);
+}
+
+.data-table td {
+    padding: 20px;
+    border-bottom: 1px solid var(--uniqlo-border);
+    vertical-align: middle;
+}
+
+.data-table tbody tr:hover {
+    background: var(--uniqlo-gray-light);
+}
+
+.card {
+    background: white;
+    border: 1px solid var(--uniqlo-border);
+    padding: 24px;
+    margin-bottom: 20px;
+}
+
+.card-header {
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--uniqlo-border);
+}
+
+.card-header h3 {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--uniqlo-black);
+}
+
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-left { text-align: left; }
+
+.mt-1 { margin-top: 8px; }
+.mt-2 { margin-top: 16px; }
+.mt-3 { margin-top: 24px; }
+.mt-4 { margin-top: 32px; }
+
+.mb-1 { margin-bottom: 8px; }
+.mb-2 { margin-bottom: 16px; }
+.mb-3 { margin-bottom: 24px; }
+.mb-4 { margin-bottom: 32px; }
+
+.p-1 { padding: 8px; }
+.p-2 { padding: 16px; }
+.p-3 { padding: 24px; }
+.p-4 { padding: 32px; }
+
+.admin-container {
+    display: flex;
+    gap: 30px;
+}
+
+.admin-sidebar {
+    width: 240px;
+    flex-shrink: 0;
+}
+
+.admin-content {
+    flex: 1;
+}
+
+.sidebar-nav a:hover,
+.sidebar-nav a.active {
+    background: var(--uniqlo-gray-light);
+    color: var(--uniqlo-red);
+}
+
+.sidebar-nav a:last-child {
+    border-bottom: none;
+}
+
+@media (max-width: 768px) {
+    .header-content {
+        height: 60px;
+        padding: 0 16px;
+    }
+    
+    nav {
+        gap: 16px;
+    }
+    
+    .admin-container {
+        flex-direction: column;
+    }
+    
+    .admin-sidebar {
+        width: 100%;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+}

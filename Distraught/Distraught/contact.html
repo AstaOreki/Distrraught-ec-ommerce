@@ -1,0 +1,167 @@
+<link rel="stylesheet" href="styles.css">
+<section id="contact" class="contact-section">
+    <div class="container">
+        <div class="contact-header">
+            <h2>Contact Us</h2>
+            <p class="section-subtitle">We'd love to hear from you. Get in touch with us today.</p>
+        </div>
+        <div class="contact-wrapper">
+
+            <div class="map-container">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3983.8242479999997!2d101.6844345!3d3.1390521!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc362abd08e7d3%3A0x232e1ff540d86c99!2sKuala%20Lumpur!5e0!3m2!1sen!2smy!4v1234567890" 
+                    width="100%" 
+                    height="400" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy">
+                </iframe>
+            </div>
+
+            <form class="contact-form" action="#" method="POST" novalidate>
+                <div class="form-group">
+                    <input type="text" id="name" name="name" placeholder="Full Name" required>
+                </div>
+
+                <div class="form-group">
+                    <input type="email" id="email" name="email" placeholder="Email Address" required>
+                </div>
+
+                <div class="form-group">
+                    <input type="tel" id="phone" name="phone" placeholder="Phone Number">
+                </div>
+
+                <div class="form-group">
+                    <input type="text" id="subject" name="subject" placeholder="Subject" required>
+                </div>
+
+                <div class="form-group">
+                    <textarea id="message" name="message" rows="5" placeholder="Message" required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-submit">SUBMIT</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<style>
+    .contact-section {
+        background-color: #ffffff;
+        padding: 60px 20px;
+    }
+
+    .contact-header {
+        text-align: center;
+        margin-bottom: 60px;
+    }
+
+    .contact-header h2 {
+        font-size: 32px;
+        font-weight: 400;
+        letter-spacing: 1px;
+        margin: 0 0 16px 0;
+        color: #000000;
+    }
+
+    .section-subtitle {
+        font-size: 14px;
+        color: #666666;
+        margin: 0;
+        font-weight: 300;
+    }
+
+    .contact-wrapper {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .map-container {
+        margin-bottom: 60px;
+    }
+
+    .contact-form {
+        width: 100%;
+    }
+
+    .form-group {
+        margin-bottom: 24px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid #cccccc;
+        padding: 12px 0;
+        font-size: 14px;
+        font-family: inherit;
+        background-color: transparent;
+        transition: border-color 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-bottom-color: #000000;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+        color: #999999;
+    }
+
+    .btn-submit {
+        background-color: #000000;
+        color: white;
+        border: none;
+        padding: 14px 40px;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 1.5px;
+        cursor: pointer;
+        transition: opacity 0.3s ease;
+        margin-top: 20px;
+    }
+
+    .btn-submit:hover {
+        opacity: 0.8;
+    }
+</style>
+
+<script>
+    const form = document.querySelector('.contact-form');
+    
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const notification = document.createElement('div');
+        notification.textContent = 'Message sent successfully';
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #000000;
+            color: white;
+            padding: 14px 24px;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            z-index: 1000;
+            animation: slideIn 0.3s ease-in-out;
+        `;
+        
+        document.body.appendChild(notification);
+        form.reset();
+        
+        setTimeout(() => notification.remove(), 3000);
+    });
+    
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes slideIn {
+            from { transform: translateX(400px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    `;
+    document.head.appendChild(style);
+</script>

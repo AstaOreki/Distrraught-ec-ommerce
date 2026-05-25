@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders | Distraught Admin</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--uniqlo-border);
+        }
+        
+        .page-title {
+            font-size: 28px;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .stat-card {
+            border: 1px solid var(--uniqlo-border);
+            padding: 24px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 32px;
+            font-weight: 300;
+            margin: 10px 0;
+            color: var(--uniqlo-black);
+        }
+        
+        .stat-label {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--uniqlo-gray-dark);
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: var(--uniqlo-gray-light);
+            flex-wrap: wrap;
+        }
+        
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-radius: 2px;
+        }
+        
+        .status-pending { background: #fff3cd; color: #856404; }
+        .status-processing { background: #cce5ff; color: #004085; }
+        .status-shipped { background: #d1ecf1; color: #0c5460; }
+        .status-delivered { background: #d4edda; color: #155724; }
+        .status-cancelled { background: #f8d7da; color: #721c24; }
+        
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .action-btn {
+            padding: 6px 12px;
+            border: 1px solid var(--uniqlo-border);
+            background: white;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .action-btn:hover {
+            background: var(--uniqlo-gray-light);
+        }
+        
+        .view-btn { color: var(--uniqlo-black); }
+        .edit-btn { color: #856404; border-color: #ffeaa7; }
+        .delete-btn { color: #721c24; border-color: #f5c6cb; }
+        
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal {
+            background: white;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid var(--uniqlo-border);
+        }
+        
+        .modal-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--uniqlo-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-body {
+            padding: 24px;
+        }
+        
+        .modal-section {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--uniqlo-border);
+        }
+        
+        .modal-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--uniqlo-gray-dark);
+        }
+        
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+        
+        .admin-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .admin-sidebar {
+            display: none;
+        }
+        
+        .admin-content {
+            width: 100%;
+        }
+        
+        main {
+            padding: 40px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">DISTRAUGHT<span> ADMIN</span></div>
+            <nav>
+                <a href="admin-dashboard.html">DASHBOARD</a>
+                <a href="manage-staff.html">Staff</a>
+                <a href="manage-members.html">Customers</a>
+                <a href="manage-categories.html">Categories</a>
+                <a href="manage-products.html">PRODUCTS</a>
+                <a href="manage-orders.html" style="color: var(--uniqlo-red);">ORDERS</a>
+                <a href="sales-report.html">REPORTS</a>
+                <a href="index.html" style="color: var(--uniqlo-gray-dark);">← Storefront</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="admin-container">
+            <div class="admin-content">
+                <div class="page-header">
+                    <h1 class="page-title">ORDER MANAGEMENT</h1>
+                    <div>
+                        <button class="btn" onclick="refreshOrders()">Refresh</button>
+                        <button class="btn btn-secondary" onclick="exportOrders()">Export CSV</button>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">TOTAL ORDERS</div>
+                        <div class="stat-value" id="totalOrders">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">TODAY'S ORDERS</div>
+                        <div class="stat-value" id="todayOrders">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">REVENUE</div>
+                        <div class="stat-value" id="totalRevenue">$0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">PENDING</div>
+                        <div class="stat-value" id="pendingOrders">0</div>
+                    </div>
+                </div>
+
+                <div class="filter-bar">
+                    <div class="filter-group">
+                        <label>Status</label>
+                        <select class="form-control" id="statusFilter" onchange="filterOrders()">
+                            <option value="">All Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="processing">Processing</option>
+                            <option value="shipped">Shipped</option>
+                            <option value="delivered">Delivered</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Date From</label>
+                        <input type="date" class="form-control" id="dateFrom" onchange="filterOrders()">
+                    </div>
+                    <div class="filter-group">
+                        <label>Date To</label>
+                        <input type="date" class="form-control" id="dateTo" onchange="filterOrders()">
+                    </div>
+                    <div class="filter-group">
+                        <label>Search</label>
+                        <input type="text" class="form-control" id="searchInput" placeholder="Order ID or Customer" onkeyup="filterOrders()">
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ORDER ID</th>
+                                <th>CUSTOMER</th>
+                                <th>DATE</th>
+                                <th>ITEMS</th>
+                                <th>TOTAL</th>
+                                <th>STATUS</th>
+                                <th>ACTIONS</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTableBody">
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="emptyState" class="empty-state" style="display: none;">
+                    <div class="empty-state-icon">📦</div>
+                    <h3>No Orders Found</h3>
+                    <p>Try adjusting your filters</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal-overlay" id="orderModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>ORDER DETAILS <span id="modalOrderId"></span></h2>
+                <button onclick="closeModal()" style="background: none; border: none; font-size: 24px; cursor: pointer;">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h3>CUSTOMER INFORMATION</h3>
+                    <div id="customerInfo"></div>
+                </div>
+                <div class="modal-section">
+                    <h3>ORDER ITEMS</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>PRODUCT</th>
+                                <th>PRICE</th>
+                                <th>QUANTITY</th>
+                                <th>TOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orderItems"></tbody>
+                    </table>
+                </div>
+                <div class="modal-section">
+                    <h3>UPDATE STATUS</h3>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <select class="form-control" id="statusUpdate">
+                            <option value="pending">Pending</option>
+                            <option value="processing">Processing</option>
+                            <option value="shipped">Shipped</option>
+                            <option value="delivered">Delivered</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                        <button class="btn" onclick="updateStatus()">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>ADMIN</h4>
+                <a href="admin-dashboard.html">Dashboard</a>
+                <a href="manage-products.html">Products</a>
+                <a href="manage-orders.html">Orders</a>
+                <a href="sales-report.html">Reports</a>
+            </div>
+            <div class="footer-section">
+                <h4>MANAGEMENT</h4>
+                <a href="manage-staff.html">Staff</a>
+                <a href="manage-members.html">Customers</a>
+                <a href="manage-categories.html">Categories</a>
+            </div>
+            <div class="footer-section">
+                <h4>STORE</h4>
+                <a href="../index.html">View Store</a>
+                <a href="../products.html">Shop Products</a>
+                <a href="../contact.html">Contact Page</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 DISTRAUGHT ADMIN PANEL v1.0</p>
+        </div>
+    </footer>
+
+    <script src="../js/cart.js"></script>
+    <script>
+        let orders = JSON.parse(localStorage.getItem('adminOrders')) || [
+            {
+                id: "ORD-001",
+                customer: { name: "Mary Jane", email: "mj.jane@gmail.com" },
+                date: "2026-01-15",
+                items: [
+                    { name: "Premium T-Shirt", price: 29.99, quantity: 2 },
+                    { name: "Slim Fit Pants", price: 59.99, quantity: 1 }
+                ],
+                status: "processing",
+                total: 119.97,
+                shipping: "123 Main St, NY"
+            }
+        ];
+
+        if (!localStorage.getItem('adminOrders')) {
+            localStorage.setItem('adminOrders', JSON.stringify(orders));
+        }
+
+        function renderOrders(filteredOrders = orders) {
+            const tbody = document.getElementById('ordersTableBody');
+            
+            if (filteredOrders.length === 0) {
+                tbody.innerHTML = '';
+                document.getElementById('emptyState').style.display = 'block';
+                updateStats([]);
+                return;
+            }
+            
+            document.getElementById('emptyState').style.display = 'none';
+            
+            tbody.innerHTML = filteredOrders.map(order => `
+                <tr>
+                    <td><strong>${order.id}</strong></td>
+                    <td>
+                        <div>${order.customer.name}</div>
+                        <small style="color: var(--uniqlo-gray-dark);">${order.customer.email}</small>
+                    </td>
+                    <td>${formatDate(order.date)}</td>
+                    <td>${order.items.length} item(s)</td>
+                    <td>$${order.total.toFixed(2)}</td>
+                    <td><span class="status-badge status-${order.status}">${order.status.toUpperCase()}</span></td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="action-btn view-btn" onclick="viewOrder('${order.id}')">View</button>
+                            <button class="action-btn edit-btn" onclick="editOrder('${order.id}')">Edit</button>
+                            <button class="action-btn delete-btn" onclick="deleteOrder('${order.id}')">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+            
+            updateStats(filteredOrders);
+        }
+
+        function formatDate(dateStr) {
+            return new Date(dateStr).toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric'
+            });
+        }
+
+        function updateStats(ordersList = orders) {
+            const today = new Date().toISOString().split('T')[0];
+            
+            document.getElementById('totalOrders').textContent = orders.length;
+            document.getElementById('todayOrders').textContent = 
+                orders.filter(o => o.date === today).length;
+            document.getElementById('totalRevenue').textContent = 
+                '$' + orders.reduce((sum, o) => sum + o.total, 0).toFixed(2);
+            document.getElementById('pendingOrders').textContent = 
+                orders.filter(o => o.status === 'pending').length;
+        }
+
+        function filterOrders() {
+            const status = document.getElementById('statusFilter').value;
+            const dateFrom = document.getElementById('dateFrom').value;
+            const dateTo = document.getElementById('dateTo').value;
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            
+            const filtered = orders.filter(order => {
+                if (status && order.status !== status) return false;
+                if (dateFrom && order.date < dateFrom) return false;
+                if (dateTo && order.date > dateTo) return false;
+                if (search && 
+                    !order.id.toLowerCase().includes(search) &&
+                    !order.customer.name.toLowerCase().includes(search) &&
+                    !order.customer.email.toLowerCase().includes(search)) {
+                    return false;
+                }
+                return true;
+            });
+            
+            renderOrders(filtered);
+        }
+
+        function viewOrder(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (!order) return;
+            
+            document.getElementById('modalOrderId').textContent = orderId;
+            document.getElementById('customerInfo').innerHTML = `
+                <p><strong>Name:</strong> ${order.customer.name}</p>
+                <p><strong>Email:</strong> ${order.customer.email}</p>
+                <p><strong>Shipping:</strong> ${order.shipping}</p>
+            `;
+            
+            document.getElementById('orderItems').innerHTML = order.items.map(item => `
+                <tr>
+                    <td>${item.name}</td>
+                    <td>$${item.price.toFixed(2)}</td>
+                    <td>${item.quantity}</td>
+                    <td>$${(item.price * item.quantity).toFixed(2)}</td>
+                </tr>
+            `).join('');
+            
+            document.getElementById('statusUpdate').value = order.status;
+            document.getElementById('orderModal').style.display = 'flex';
+        }
+
+        function updateStatus() {
+            const orderId = document.getElementById('modalOrderId').textContent.trim();
+            const newStatus = document.getElementById('statusUpdate').value;
+            
+            const orderIndex = orders.findIndex(o => o.id === orderId);
+            if (orderIndex !== -1) {
+                orders[orderIndex].status = newStatus;
+                localStorage.setItem('adminOrders', JSON.stringify(orders));
+                renderOrders();
+                closeModal();
+                alert(`Order ${orderId} updated to ${newStatus}`);
+            }
+        }
+
+        function deleteOrder(orderId) {
+            if (confirm(`Delete order ${orderId}?`)) {
+                orders = orders.filter(o => o.id !== orderId);
+                localStorage.setItem('adminOrders', JSON.stringify(orders));
+                renderOrders();
+                alert('Order deleted');
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('orderModal').style.display = 'none';
+        }
+
+        function refreshOrders() {
+            filterOrders();
+            alert('Orders refreshed');
+        }
+
+        function exportOrders() {
+            alert('Exporting orders to CSV...');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const today = new Date().toISOString().split('T')[0];
+            const lastMonth = new Date();
+            lastMonth.setMonth(lastMonth.getMonth() - 1);
+            const lastMonthStr = lastMonth.toISOString().split('T')[0];
+            
+            document.getElementById('dateFrom').value = lastMonthStr;
+            document.getElementById('dateTo').value = today;
+            
+            renderOrders();
+            
+            document.getElementById('orderModal').addEventListener('click', (e) => {
+                if (e.target === document.getElementById('orderModal')) {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

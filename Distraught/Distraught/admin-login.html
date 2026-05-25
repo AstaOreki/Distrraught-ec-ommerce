@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Distraught</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #000;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: white;
+            border-radius: 0;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .form-container {
+            display: flex;
+        }
+
+        .form {
+            width: 50%;
+            padding: 40px;
+        }
+
+        .admin-badge {
+            display: inline-block;
+            background: #000;
+            color: white;
+            font-size: 10px;
+            padding: 2px 8px;
+            letter-spacing: 2px;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        h2 {
+            margin-bottom: 30px;
+            color: #000;
+            font-weight: 400;
+            letter-spacing: 2px;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #000;
+            font-weight: 500;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 0;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #000;
+        }
+
+        .password-hint {
+            font-size: 11px;
+            color: #666;
+            margin-top: 6px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #000;
+            color: white;
+            border: 1px solid #000;
+            border-radius: 0;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        .error-message {
+            color: #ff3860;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .sidebar {
+            width: 50%;
+            background: #000;
+            color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .sidebar h3 {
+            font-size: 28px;
+            margin-bottom: 15px;
+            font-weight: 400;
+            letter-spacing: 2px;
+        }
+
+        .sidebar h3 span {
+            font-size: 12px;
+            background: rgba(255,255,255,0.2);
+            padding: 2px 8px;
+            margin-left: 10px;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .sidebar p {
+            color: #ccc;
+            line-height: 1.8;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .admin-stats {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .admin-stats li {
+            margin-bottom: 15px;
+            font-size: 13px;
+            color: #ccc;
+            display: flex;
+            align-items: center;
+        }
+
+        .admin-stats li:before {
+            content: "◆";
+            margin-right: 10px;
+            color: #fff;
+            font-size: 10px;
+        }
+
+        .security-note {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 11px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .demo-credentials {
+            background: #f5f5f5;
+            padding: 15px;
+            margin-top: 25px;
+            border: 1px solid #eee;
+        }
+
+        .demo-credentials p {
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .credential-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            padding: 5px 0;
+            color: #333;
+        }
+
+        .credential-label {
+            font-weight: 600;
+        }
+
+        .back-to-store {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-to-store a {
+            color: #666;
+            text-decoration: none;
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .back-to-store a:hover {
+            color: #000;
+        }
+
+        @media (max-width: 768px) {
+            .form-container {
+                flex-direction: column;
+            }
+            
+            .form, .sidebar {
+                width: 100%;
+            }
+            
+            .sidebar {
+                padding: 40px;
+                text-align: center;
+                align-items: center;
+            }
+            
+            .admin-stats li {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <form class="form" id="adminLoginForm">
+                <h2>
+                    ADMIN LOGIN
+                    <span class="admin-badge">STAFF ONLY</span>
+                </h2>
+                
+                <div class="form-group">
+                    <label>Staff Email</label>
+                    <input type="email" id="adminEmail" placeholder="user@distraught.com" required autocomplete="off">
+                    <div class="error-message" id="adminEmailError"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="adminPassword" placeholder="Enter your password" required>
+                    <div class="error-message" id="adminPasswordError"></div>
+                </div>
+                
+                <button type="submit">ACCESS ADMIN PANEL</button>
+                
+                <div class="back-to-store">
+                    <a href="index.html">← RETURN TO STOREFRONT</a>
+                </div>
+            </form>
+
+            <div class="sidebar">
+                <h3>
+                    DISTRAUGHT
+                    <span>ADMIN</span>
+                </h3>
+                <p>Authorized personnel only. This system contains confidential information and is restricted to authorized staff members.</p>
+                
+                <ul class="admin-stats">
+                    <li>Full inventory management</li>
+                    <li>Order processing & fulfillment</li>
+                    <li>Staff account administration</li>
+                    <li>Sales analytics & reporting</li>
+                    <li>Customer management</li>
+                </ul>
+                
+                <div class="security-note">
+                    ⚠️ All actions are logged • Unauthorized access prohibited
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function getAdminUsers() {
+            return JSON.parse(localStorage.getItem('adminUsers')) || [
+                {
+                    id: 1,
+                    name: "Amiroul Adni",
+                    email: "amirouladni@distraught.com",
+                    password: "Admin123",
+                    role: "Administrator",
+                    position: "Store Manager",
+                    avatar: "AA",
+                    status: "active",
+                    lastLogin: null
+                },
+                {
+                    id: 2,
+                    name: "Ammar Darwisy",
+                    email: "ammar.d@distraught.com",
+                    password: "Manager123",
+                    role: "Manager",
+                    position: "Inventory Manager",
+                    avatar: "AD",
+                    status: "active",
+                    lastLogin: null
+                },
+                {
+                    id: 3,
+                    name: "Ali Rahman",
+                    email: "ali.rahman@distraught.com",
+                    password: "Staff123",
+                    role: "Staff",
+                    position: "Sales Associate",
+                    avatar: "AR",
+                    status: "active",
+                    lastLogin: null
+                }
+            ];
+        }
+
+        function saveAdminUsers(users) {
+            localStorage.setItem('adminUsers', JSON.stringify(users));
+        }
+
+        if (!localStorage.getItem('adminUsers')) {
+            saveAdminUsers(getAdminUsers());
+        }
+
+        function showError(elementId, message) {
+            const errorElement = document.getElementById(elementId);
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+
+        function clearError(elementId) {
+            const errorElement = document.getElementById(elementId);
+            if (errorElement) {
+                errorElement.textContent = '';
+                errorElement.style.display = 'none';
+            }
+        }
+
+        function clearAllErrors() {
+            document.querySelectorAll('.error-message').forEach(el => {
+                el.textContent = '';
+                el.style.display = 'none';
+            });
+        }
+
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const email = document.getElementById('adminEmail').value.trim();
+            const password = document.getElementById('adminPassword').value;
+
+            clearError('adminEmailError');
+            clearError('adminPasswordError');
+
+            if (!email) {
+                showError('adminEmailError', 'Email is required');
+                return;
+            }
+            
+            if (!isValidEmail(email)) {
+                showError('adminEmailError', 'Please enter a valid email address');
+                return;
+            }
+            
+            if (!password) {
+                showError('adminPasswordError', 'Password is required');
+                return;
+            }
+
+            const adminUsers = getAdminUsers();
+            const admin = adminUsers.find(u => u.email === email && u.password === password);
+
+            if (!admin) {
+                showError('adminPasswordError', 'Invalid email or password');
+                return;
+            }
+
+            if (admin.status !== 'active') {
+                showError('adminEmailError', 'This account has been deactivated. Please contact HR.');
+                return;
+            }
+
+            admin.lastLogin = new Date().toISOString();
+            saveAdminUsers(adminUsers);
+
+            localStorage.setItem('adminUser', JSON.stringify({
+                id: admin.id,
+                name: admin.name,
+                email: admin.email,
+                role: admin.role,
+                position: admin.position,
+                avatar: admin.avatar
+            }));
+            
+            localStorage.setItem('adminAuthToken', 'admin_logged_in');
+            localStorage.setItem('adminLoginTime', new Date().toISOString());
+
+            console.log(`Admin login successful: ${admin.name} (${admin.role})`);
+
+            alert(`Welcome back, ${admin.name}! You are logged in as ${admin.role}.`);
+            window.location.href = 'admin-dashboard.html';
+        });
+
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', function() {
+                const errorId = this.id + 'Error';
+                if (document.getElementById(errorId)) {
+                    clearError(errorId);
+                }
+            });
+        });
+
+        function checkAdminLoggedIn() {
+            const adminAuth = localStorage.getItem('adminAuthToken');
+            const adminUser = localStorage.getItem('adminUser');
+            
+            if (adminAuth === 'admin_logged_in' && adminUser) {
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAdminLoggedIn();
+            clearAllErrors();     
+            console.log('Admin login page initialized');
+        });
+    </script>
+</body>
+</html>

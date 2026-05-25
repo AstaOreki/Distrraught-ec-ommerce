@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account - Distraught</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #fff;
+            color: #000;
+        }
+
+        header {
+            background: #fff;
+            padding: 1rem 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: #222;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .cart-link {
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -12px;
+            background: #222;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .dashboard-title {
+            font-size: 28px;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .user-info {
+            background: #f9f9f9;
+            padding: 30px;
+            margin-bottom: 40px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .user-info h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .user-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .user-detail-item {
+            margin-bottom: 15px;
+        }
+
+        .user-detail-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .user-detail-value {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .orders-section {
+            border: 1px solid #e0e0e0;
+            padding: 30px;
+        }
+
+        .orders-section h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .orders-table th {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 2px solid #000;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .orders-table td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .order-status {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #f39c12;
+            color: white;
+            font-size: 12px;
+            border-radius: 20px;
+        }
+
+        .order-status.paid {
+            background: #27ae60;
+        }
+
+        .empty-orders {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background: #000;
+            color: white;
+            border: 1px solid #000;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        .btn-secondary {
+            background: #fff;
+            color: #000;
+            border: 1px solid #ccc;
+        }
+
+        .btn-secondary:hover {
+            border-color: #000;
+        }
+
+        .logout-btn {
+            background: none;
+            border: 1px solid #ccc;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            border-color: #000;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: #f5f5f5;
+            margin-top: 60px;
+            border-top: 1px solid #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <img src="logo.jpg" alt="Distraught Logo">
+                Distraught
+            </div>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="product.html">Shop</a>
+                <a href="shoppingcart.html" class="cart-link">
+                    Cart <span class="cart-count" id="cartCount">0</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div id="dashboardContent">
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Distraught. All rights reserved.</p>
+        <p>Free shipping on orders over RM50</p>
+    </footer>
+
+    <script>
+        function getUsers() {
+            return JSON.parse(localStorage.getItem('users')) || [];
+        }
+
+        function saveUsers(users) {
+            localStorage.setItem('users', JSON.stringify(users));
+        }
+
+        function getCurrentUser() {
+            const email = localStorage.getItem('currentUserEmail');
+            if (!email) return null;
+            const users = getUsers();
+            return users.find(u => u.email === email);
+        }
+
+        function updateCurrentUser(updatedUser) {
+            const users = getUsers();
+            const index = users.findIndex(u => u.email === updatedUser.email);
+            if (index !== -1) {
+                users[index] = updatedUser;
+                saveUsers(users);
+            }
+        }
+
+        function loadCart() {
+            const user = getCurrentUser();
+            if (user) {
+                return user.cart || [];
+            }
+            return [];
+        }
+
+        function updateCartCount() {
+            const cart = loadCart();
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.querySelectorAll('.cart-count').forEach(el => {
+                el.textContent = count;
+            });
+        }
+
+        function loadDashboard() {
+            const user = getCurrentUser();
+            
+            if (!user) {
+                window.location.href = 'signup.html';
+                return;
+            }
+
+            const dashboardContent = document.getElementById('dashboardContent');
+            
+            const orders = user.orders || [];
+            
+            orders.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            let ordersHtml = '';
+            
+            if (orders.length === 0) {
+                ordersHtml = `
+                    <div class="empty-orders">
+                        <p style="margin-bottom: 20px;">You haven't placed any orders yet.</p>
+                        <a href="product.html" class="btn">Start Shopping</a>
+                    </div>
+                `;
+            } else {
+                ordersHtml = `
+                    <table class="orders-table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Date</th>
+                                <th>Items</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+
+                orders.slice(0, 10).forEach(order => {
+                    const itemCount = order.items.reduce((sum, item) => sum + item.quantity, 0);
+                    const statusClass = order.status === 'paid' ? 'paid' : '';
+                    
+                    ordersHtml += `
+                        <tr>
+                            <td>#${order.orderId.slice(-8)}</td>
+                            <td>${new Date(order.date).toLocaleDateString()}</td>
+                            <td>${itemCount} items</td>
+                            <td>RM${order.totals.grandTotal.toFixed(2)}</td>
+                            <td><span class="order-status ${statusClass}">${order.status}</span></td>
+                            <td><button class="btn-secondary" style="padding:5px 10px;" onclick="viewOrder('${order.orderId}')">View</button></td>
+                        </tr>
+                    `;
+                });
+
+                ordersHtml += `
+                        </tbody>
+                    </table>
+                `;
+            }
+
+            dashboardContent.innerHTML = `
+                <div class="dashboard-header">
+                    <h1 class="dashboard-title">My Account</h1>
+                    <button class="logout-btn" onclick="logout()">Logout</button>
+                </div>
+
+                <div class="user-info">
+                    <h3>Account Information</h3>
+                    <div class="user-details">
+                        <div class="user-detail-item">
+                            <div class="user-detail-label">Name</div>
+                            <div class="user-detail-value">${user.name}</div>
+                        </div>
+                        <div class="user-detail-item">
+                            <div class="user-detail-label">Email</div>
+                            <div class="user-detail-value">${user.email}</div>
+                        </div>
+                        <div class="user-detail-item">
+                            <div class="user-detail-label">Member Since</div>
+                            <div class="user-detail-value">${user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A'}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="orders-section">
+                    <h3>Order History</h3>
+                    ${ordersHtml}
+                </div>
+            `;
+
+            updateCartCount();
+        }
+
+        window.viewOrder = function(orderId) {
+            const user = getCurrentUser();
+            if (!user) return;
+            
+            const order = user.orders?.find(o => o.orderId === orderId);
+            if (order) {
+                localStorage.setItem('viewOrder', JSON.stringify(order));
+                alert(`Order #${orderId}\nTotal: RM${order.totals.grandTotal.toFixed(2)}\nStatus: ${order.status}`);
+            }
+        };
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('currentUserEmail');
+                localStorage.removeItem('userName');
+                localStorage.removeItem('authToken');
+                window.location.href = 'index.html';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadDashboard();
+        });
+    </script>
+</body>
+</html>

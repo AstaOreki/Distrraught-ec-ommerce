@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Catalog - Distraught</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background-color: #ffffff;
+            padding: 0;
+        }
+        
+        header {
+            background: #fff;
+            padding: 1rem 0;
+            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 40px;
+        }
+        
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo img {
+            height: 40px;
+        }
+        
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        nav a {
+            color: #222;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .cart-link {
+            position: relative;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -12px;
+            background: #222;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+        }
+        
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        #userGreeting {
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        #logoutBtn {
+            padding: 6px 12px;
+            background: none;
+            border: 1px solid #222;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .page-title {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+        
+        .hero-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            margin-bottom: 40px;
+            display: block;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .product-card {
+            background: #ffffff;
+            transition: opacity 0.3s;
+        }
+        
+        .product-card:hover {
+            opacity: 0.7;
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 350px;
+            background-color: #f5f5f5;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-info {
+            padding: 0;
+        }
+        
+        .product-name {
+            font-weight: 400;
+            font-size: 14px;
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+        }
+        
+        .product-price {
+            font-size: 14px;
+            font-weight: 400;
+            margin-bottom: 15px;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #000;
+            color: white;
+            border: 1px solid #000;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #fff;
+            color: #000;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 50px 0;
+        }
+        
+        .pagination button {
+            padding: 10px 16px;
+            background: transparent;
+            color: #000;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+        
+        .pagination button.active {
+            background: #000;
+            color: white;
+            border-color: #000;
+        }
+        
+        .pagination button:hover {
+            background: #000;
+            color: white;
+        }
+        
+        .cart-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            padding: 15px 20px;
+            z-index: 1000;
+            animation: slideIn 0.3s;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            background-color: #f5f5f5;
+            margin-top: 60px;
+        }
+        
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <img src="logo.jpg" alt="Distraught Logo">
+                Distraught
+            </div>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="product.html">Shop</a>
+                <a href="aftersignup.html">My Account</a>
+                <a href="shoppingcart.html" class="cart-link">
+                    Cart <span class="cart-count" id="cartCount">0</span>
+                </a>
+                <div class="user-section">
+                    <span id="userGreeting"></span>
+                    <button id="logoutBtn" style="display:none;">Logout</button>
+                    <a href="signup.html" id="loginLink" class="btn" style="width:auto; padding:6px 12px;">Sign In</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="page active" id="page1">
+            <img src="logo.jpg" alt="Distraught Logo" style="height: 40px; margin: 0 auto 20px; display: block;">
+            <h1 class="page-title">OTHERS COLLECTION</h1>
+            
+            <img src="hero2.jpg" alt="Summer Collection" class="hero-image">
+            
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="jorts.jpg" alt="Jorts">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Jorts</div>
+                        <div class="product-price">RM119.99</div>
+                        <button class="btn" onclick="addToCart(1, 'Jorts', 119.99)">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="zipper.jpg" alt="Zipper Jacket">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Zipper Jacket</div>
+                        <div class="product-price">RM149.99</div>
+                        <button class="btn" onclick="addToCart(2, 'Zipper Jacket', 149.99)">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="tshirt.jpg" alt="Tshirt">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Tshirt</div>
+                        <div class="product-price">RM79.99</div>
+                        <button class="btn" onclick="addToCart(3, 'Tshirt', 79.99)">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="pants.jpg" alt="DD Pants">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">DD Pants</div>
+                        <div class="product-price">RM109.99</div>
+                        <button class="btn" onclick="addToCart(4, 'DD Pants', 109.99)">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page" id="page2">
+            <img src="logo.jpg" alt="Distraught Logo" style="height: 40px; margin: 0 auto 20px; display: block;">
+            <h1 class="page-title">OTHERS COLLECTION</h1>
+            
+            <img src="hero3.jpg" alt="Summer Collection" class="hero-image">
+            
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="blouse.jpg" alt="Silk Blouse">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Silk Blouse</div>
+                        <div class="product-price">RM99.99</div>
+                        <button class="btn" onclick="addToCart(5, 'Silk Blouse', 99.99)">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="cardigan.jpg" alt="Cardigan">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Wool Cardigan</div>
+                        <div class="product-price">RM109.99</div>
+                        <button class="btn" onclick="addToCart(6, 'Wool Cardigan', 109.99)">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="skirt.jpg" alt="Pleated Skirt">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Pleated Skirt</div>
+                        <div class="product-price">RM84.99</div>
+                        <button class="btn" onclick="addToCart(7, 'Pleated Skirt', 84.99)">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="blazer.jpg" alt="Black Blazer">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Black Blazer</div>
+                        <div class="product-price">RM129.99</div>
+                        <button class="btn" onclick="addToCart(8, 'Black Blazer', 129.99)">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page" id="page3">
+            <img src="logo.jpg" alt="Distraught Logo" style="height: 40px; margin: 0 auto 20px; display: block;">
+            <h1 class="page-title">OTHERS COLLECTION</h1>
+            
+            <img src="hero4.jpg" alt="Summer Collection" class="hero-image">
+            
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="polo.jpg" alt="Cotton Polo">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Cotton Polo</div>
+                        <div class="product-price">RM59.99</div>
+                        <button class="btn" onclick="addToCart(9, 'Cotton Polo', 59.99)">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="sportshoodie.jpg" alt="Sports Hoodie">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Sports Hoodie</div>
+                        <div class="product-price">RM119.99</div>
+                        <button class="btn" onclick="addToCart(10, 'Sports Hoodie', 119.99)">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="shorts.jpg" alt="Shorts">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Shorts</div>
+                        <div class="product-price">RM64.99</div>
+                        <button class="btn" onclick="addToCart(11, 'Shorts', 64.99)">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="coat.jpg" alt="Winter Coat">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Winter Coat</div>
+                        <div class="product-price">RM199.99</div>
+                        <button class="btn" onclick="addToCart(12, 'Winter Coat', 199.99)">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page" id="page4">
+            <img src="logo.jpg" alt="Distraught Logo" style="height: 40px; margin: 0 auto 20px; display: block;">
+            <h1 class="page-title">OTHERS COLLECTION</h1>
+            
+            <img src="hero5.jpg" alt="Summer Collection" class="hero-image">
+            
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="tshirt.jpg" alt="Classic T-Shirt">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Classic T-Shirt</div>
+                        <div class="product-price">RM49.99</div>
+                        <button class="btn" onclick="addToCart(13, 'Classic T-Shirt', 49.99)">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="trench.jpg" alt="Trench Coat">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Trench Coat</div>
+                        <div class="product-price">RM179.99</div>
+                        <button class="btn" onclick="addToCart(14, 'Trench Coat', 179.99)">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="dungarees.jpg" alt="Denim Dungarees">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Denim Dungarees</div>
+                        <div class="product-price">RM94.99</div>
+                        <button class="btn" onclick="addToCart(15, 'Denim Dungarees', 94.99)">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="vest.jpg" alt="Knitted Vest">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Knitted Vest</div>
+                        <div class="product-price">RM74.99</div>
+                        <button class="btn" onclick="addToCart(16, 'Knitted Vest', 74.99)">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page" id="page5">
+            <img src="logo.jpg" alt="Distraught Logo" style="height: 40px; margin: 0 auto 20px; display: block;">
+            <h1 class="page-title">OTHERS COLLECTION</h1>
+            
+            <img src="hero6.jpg" alt="Summer Collection" class="hero-image">
+            
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="jumpsuit.jpg" alt="Casual Jumpsuit">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Casual Jumpsuit</div>
+                        <div class="product-price">RM139.99</div>
+                        <button class="btn" onclick="addToCart(17, 'Casual Jumpsuit', 139.99)">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="linen.jpg" alt="Linen Shirt">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Linen Shirt</div>
+                        <div class="product-price">RM89.99</div>
+                        <button class="btn" onclick="addToCart(18, 'Linen Shirt', 89.99)">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="cargo.jpg" alt="Cargo Overalls">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Cargo Overalls</div>
+                        <div class="product-price">RM124.99</div>
+                        <button class="btn" onclick="addToCart(19, 'Cargo Overalls', 124.99)">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="poncho.jpg" alt="Wool Poncho">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Wool Poncho</div>
+                        <div class="product-price">RM124.99</div>
+                        <button class="btn" onclick="addToCart(20, 'Wool Poncho', 124.99)">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pagination">
+            <button class="active" onclick="showPage(1)">1</button>
+            <button onclick="showPage(2)">2</button>
+            <button onclick="showPage(3)">3</button>
+            <button onclick="showPage(4)">4</button>
+            <button onclick="showPage(5)">5</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Distraught. All rights reserved.</p>
+        <p>Free shipping on orders over RM50</p>
+    </footer>
+
+    <script>
+        function getUsers() {
+            return JSON.parse(localStorage.getItem('users')) || [];
+        }
+
+        function saveUsers(users) {
+            localStorage.setItem('users', JSON.stringify(users));
+        }
+
+        function getCurrentUser() {
+            const email = localStorage.getItem('currentUserEmail');
+            if (!email) return null;
+            const users = getUsers();
+            return users.find(u => u.email === email);
+        }
+
+        function updateCurrentUser(updatedUser) {
+            const users = getUsers();
+            const index = users.findIndex(u => u.email === updatedUser.email);
+            if (index !== -1) {
+                users[index] = updatedUser;
+                saveUsers(users);
+            }
+        }
+
+        function loadCart() {
+            const user = getCurrentUser();
+            if (user) {
+                return user.cart || [];
+            } else {
+                return JSON.parse(localStorage.getItem('guestCart')) || [];
+            }
+        }
+
+        function saveCart(cart) {
+            const user = getCurrentUser();
+            if (user) {
+                user.cart = cart;
+                updateCurrentUser(user);
+            } else {
+                localStorage.setItem('guestCart', JSON.stringify(cart));
+            }
+            updateCartCount();
+        }
+
+        window.addToCart = function(productId, productName, productPrice) {
+            const cart = loadCart();
+            
+            const existingItem = cart.find(item => item.id == productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: productId,
+                    name: productName,
+                    price: parseFloat(productPrice),
+                    quantity: 1
+                });
+            }
+            
+            saveCart(cart);
+            showNotification(`${productName} added to cart!`);
+        }
+
+        function updateCartCount() {
+            const cart = loadCart();
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.querySelectorAll('.cart-count').forEach(el => {
+                el.textContent = count;
+            });
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'cart-notification';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 3000);
+        }
+
+        window.showPage = function(pageNumber) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            document.getElementById('page' + pageNumber).classList.add('active');
+            
+            const buttons = document.querySelectorAll('.pagination button');
+            buttons.forEach((btn, index) => {
+                if (index + 1 === pageNumber) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        }
+
+        function updateUIForUser() {
+            const user = getCurrentUser();
+            const greeting = document.getElementById('userGreeting');
+            const logoutBtn = document.getElementById('logoutBtn');
+            const loginLink = document.getElementById('loginLink');
+            
+            if (user) {
+                greeting.textContent = `Welcome, ${user.name.split(' ')[0]}`;
+                logoutBtn.style.display = 'block';
+                loginLink.style.display = 'none';
+            } else {
+                greeting.textContent = '';
+                logoutBtn.style.display = 'none';
+                loginLink.style.display = 'inline-block';
+            }
+            updateCartCount();
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('currentUserEmail');
+                localStorage.removeItem('userName');
+                localStorage.removeItem('authToken');
+                window.location.href = 'index.html';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateUIForUser();
+            
+            showPage(1);
+            
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', logout);
+            }
+            
+            const user = getCurrentUser();
+            if (user) {
+                const guestCart = JSON.parse(localStorage.getItem('guestCart')) || [];
+                if (guestCart.length > 0) {
+                    user.cart = user.cart || [];
+                    guestCart.forEach(guestItem => {
+                        const existing = user.cart.find(item => item.id == guestItem.id);
+                        if (existing) {
+                            existing.quantity += guestItem.quantity;
+                        } else {
+                            user.cart.push(guestItem);
+                        }
+                    });
+                    updateCurrentUser(user);
+                    localStorage.removeItem('guestCart');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

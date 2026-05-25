@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #ffffff;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .hero-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+        h1 {
+            font-size: 42px;
+            font-weight: 300;
+            letter-spacing: -0.5px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+        .intro {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 60px;
+            max-width: 600px;
+        }
+        .owner-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 80px;
+            padding-top: 60px;
+            border-top: 1px solid #e0e0e0;
+        }
+        .owner-info h2 {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            color: #000;
+        }
+        .owner-info p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 12px;
+        }
+        .owner-info strong {
+            display: block;
+            font-weight: 600;
+            color: #000;
+            margin-bottom: 4px;
+        }
+    </style>
+</head>
+<body>
+    <img src="aboutus.jpg" alt="About Us Hero" class="hero-image">
+    
+    <div class="container">
+        <h1>About Us</h1>
+        <p class="intro">Discover the story behind our brand. Simple, quality, and timeless—that's our commitment to you.</p>
+        
+        <div class="owner-info">
+            <div>
+                <h2>Our Brand</h2>
+                <p><strong>Name:</strong> Distraught Group</p>
+                <p><strong>Mission:</strong> To deliver high-quality clothing that exceeds customers' expectations.</p>
+            </div>
+            <div>
+                <h2>Contact</h2>
+                <p><strong>Email:</strong> distraught@gmail.com</p>
+                <p><strong>Phone:</strong> 03-234567897</p>
+            </div>
+            <div>
+                <h2>Experience</h2>
+                <p><strong>Years:</strong> 5+ Years in streetwear business</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
